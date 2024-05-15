@@ -25,4 +25,24 @@ class VMMetaDataConfig:
     python_hash_seed: int = 442
     mlflow_tracking_uri: str = SI(${})
     node_count: int = SI(${})
-    disks: list[str] = SI(${})   
+    disks: list[str] = SI(${})  
+
+@dataclass:
+class InstanceTemplateCreatorConfig:
+_target_: str = "instance_template_creator.InstanceTemplateCreator"
+scopes: list[str] =  field(default_factory=lambda:[
+    "https://www.googleapis.com/auth/cloud-platform"
+    "https://www.googleapis.com/auth/clouduseraccounts.readonly"
+    "https://www.googleapis.com/auth/cloudruntimeconfig"
+])
+network: str = SI("https://www.googleapis.com/compute/v1/projects/${.project_id}/global/networks/default")
+subnetwork: str = SI("https://www.googleapis.com/compute/v1/projects/${.project_id}/regions/europe-west4/subnetworks/default")
+startup_script_path: str = "scripts/task_runner_startup_script.sh"
+vm_config: VMConfig = VMConfig()
+boot_disk_config: BootDiskConfig = BootDiskConfig()
+vm_metadata_config: VMMetaDataConfig = VMMetaDataConfig()
+template_name: str = SI("${}")
+project_id: str = SI("${}")
+labels: dict[str, str] = field(default_factory=lambda: {
+    "project": cybulde
+})
