@@ -11,4 +11,4 @@ class Config:
 
 def setup_config() -> None:
     cs = ConfigStore.instance()
-    cs.store(name="config", node="config")
+    cs.store(name="config", node=Config)
