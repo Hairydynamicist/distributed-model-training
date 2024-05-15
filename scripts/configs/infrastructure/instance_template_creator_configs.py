@@ -7,7 +7,7 @@ class BootDiskConfig:
     project_id: str = "ubuntu-os-cloud"
     name: str = "ubuntu-2204-jammy-v20230714"
     size_gb: int = 50
-    labels: Any = SI("${}")
+    labels: Any = SI("${..labels}")
 
 @dataclass
 class VMConfig:
@@ -19,13 +19,13 @@ class VMConfig:
 
 @dataclass
 class VMMetaDataConfig:
-    instance_group_name: str = SI(${})
-    docker_image: str = SI(${})
-    zone: str = SI(${})
+    instance_group_name: str = SI(${infrastructure.instance_group_creator.name})
+    docker_image: str = SI(${docker_image})
+    zone: str = SI(${infrastructure.zone})
     python_hash_seed: int = 442
-    mlflow_tracking_uri: str = SI(${})
-    node_count: int = SI(${})
-    disks: list[str] = SI(${})  
+    mlflow_tracking_uri: str = SI(${infrastructure.mlflow.mlflow_internal_tracking_uri})
+    node_count: int = SI(${infrastructure.instance_group_creator.node_count})
+    disks: list[str] = SI(${..vmconfig.disks})  
 
 @dataclass:
 class InstanceTemplateCreatorConfig:
@@ -41,8 +41,8 @@ startup_script_path: str = "scripts/task_runner_startup_script.sh"
 vm_config: VMConfig = VMConfig()
 boot_disk_config: BootDiskConfig = BootDiskConfig()
 vm_metadata_config: VMMetaDataConfig = VMMetaDataConfig()
-template_name: str = SI("${}")
-project_id: str = SI("${}")
+template_name: str = SI("${infrastructure.instance_group_creator.name}")
+project_id: str = SI("${infrastructure.project_id}")
 labels: dict[str, str] = field(default_factory=lambda: {
     "project": cybulde
 })
