@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from configs.infrastructure.instance_template_creator_configs import InstanceTemplateCreatorConfig
+from .instance_template_creator_configs import InstanceTemplateCreatorConfig
 
 @dataclass
 class InstanceGroupCreatorConfig:

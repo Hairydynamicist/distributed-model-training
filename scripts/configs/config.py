@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from configs.infrastructure.infrastructure_configs import InfrastructureConfig
+from scripts.configs.infrastructure.infrastructure_configs import InfrastructureConfig
 
 from hydra.core.config_store import ConfigStore
 

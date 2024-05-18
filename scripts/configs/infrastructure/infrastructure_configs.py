@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from typing import Optional
 from omegaconf import SI
 
-from configs.infrastructure.instance_group_creator_configs import InstanceGroupCreatorConfig
-
+from scripts.configs.infrastructure.instance_group_creator_configs import InstanceGroupCreatorConfig
+#scripts.configs.infrastructure.instance_group_creator_configs
 @dataclass
 class MLFlowCOnfig:
     mlflow_external_tracking_uri: str = SI("${oc.env:MLFLOW_TRACKING_URI, localhost:6101")
