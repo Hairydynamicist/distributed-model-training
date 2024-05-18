@@ -67,7 +67,7 @@ class InstanceTemplateCreator:
         self.template = compute_v1.Instance_Template()
         self.template.name = self.template_name
 
-    def create_template(self) -> compute_v1.Instance_Template:
+    def create_template(self) -> compute_v1.InstanceTemplate:
         self.logger.info("Started creating instance template...")
         self.logger.info(f"{self.vm_metadata_config}")
 

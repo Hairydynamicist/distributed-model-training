@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any, Optional
 from omegaconf import SI
 from instance_template_creator import VMType
@@ -18,7 +18,7 @@ class VMConfig:
     vm_type: VMType = VMType.STANDARD
     disks: list[str] = field(default_factory=lambda: []) 
 
-@dataclasss
+@dataclass
 class VMMetaDataConfig:
     instance_group_name: str = SI("${....instance_group_creator.name}")
     docker_image: str = SI("${docker_image}")
