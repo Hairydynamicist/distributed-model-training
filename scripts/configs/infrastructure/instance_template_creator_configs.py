@@ -45,5 +45,5 @@ class InstanceTemplateCreatorConfig:
     template_name: str = SI("${infrastructure.instance_group_creator.name}")
     project_id: str = SI("${infrastructure.project_id}")
     labels: dict[str, str] = field(default_factory=lambda: {
-        "project": cybulde
+        "project": "cybulde"
     })
