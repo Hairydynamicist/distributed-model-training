@@ -1,11 +1,11 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from scripts.configs.infrastructure.infrastructure_configs import InfrastructureConfig
 
 from hydra.core.config_store import ConfigStore
 
 @dataclass
 class Config:
-    infrastructure: InfrastructureConfig = InfrastructureConfig()
+    infrastructure: InfrastructureConfig = field(default_factory=InfrastructureConfig)
     docker_image: str = "asd"
 
 

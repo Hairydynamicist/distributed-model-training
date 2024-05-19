@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Optional
 from omegaconf import SI
 
@@ -22,4 +22,4 @@ class MLFlowCOnfig:
 class InfrastructureConfig:
     project_id: str = "cybulde"
     zone: str = "europe-west4-a"
-    instance_group_creator: InstanceGroupCreatorConfig = InstanceGroupCreatorConfig()
+    instance_group_creator: InstanceGroupCreatorConfig = field(default_factory=InstanceGroupCreatorConfig)

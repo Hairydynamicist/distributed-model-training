@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from .instance_template_creator_configs import InstanceTemplateCreatorConfig
+from omegaconf import SI
 
 @dataclass
 class InstanceGroupCreatorConfig:
