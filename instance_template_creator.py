@@ -1,7 +1,7 @@
 from enum import Enum
 from dataclasses import dataclass
 from google.cloud import compute_v1 
-from pathlib import path
+from pathlib import Path
 
 class VMType(Enum):
     STANDARD = "STANDARD"
@@ -53,21 +53,21 @@ class InstanceTemplateCreator:
     ) -> None:
         self.logger = get_logger(self.__class__.__name__)
 
-        self.scopes = scopes : list[str],
-        self.network = network : str,
-        self.subnetwork = subnetwork : str,
-        self.startup_script_path = startup_script_path : str,
-        self.vm_config = vm_config : VMConfig,
-        self.boot_disk_config = boot_disk_config : BootDiskConfig,
-        self.vm_metadata_config = vm_metadata_config : VMMetaDataConfig,
-        self.template_name = template_name : str,
-        self.project_id = project_id : str,
-        self.labels = labels : dict[str, str]
+        self.scopes : list[str] = scopes,
+        self.network : str = network,
+        self.subnetwork : str = subnetwork,
+        self.startup_script_path  : str = startup_script_path,
+        self.vm_config : VMConfig = vm_config,
+        self.boot_disk_config  : BootDiskConfig = boot_disk_config,
+        self.vm_metadata_config : VMMetaDataConfig = vm_metadata_config,
+        self.template_name : str = template_name,
+        self.project_id : str = project_id,
+        self.labels : dict[str, str] = labels 
 
         self.template = compute_v1.Instance_Template()
         self.template.name = self.template_name
 
-    def create_template(self) -> compute_v1.Instance_Template:
+    def create_template(self) -> compute_v1.InstanceTemplate:
         self.logger.info("Started creating instance template...")
         self.logger.info(f"{self.vm_metadata_config}")
 
