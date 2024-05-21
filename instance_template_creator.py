@@ -2,6 +2,7 @@ from enum import Enum
 from dataclasses import dataclass
 from google.cloud import compute_v1 
 from pathlib import Path
+from utils import get_logger
 
 class VMType(Enum):
     STANDARD = "STANDARD"
@@ -64,7 +65,7 @@ class InstanceTemplateCreator:
         self.project_id : str = project_id,
         self.labels : dict[str, str] = labels 
 
-        self.template = compute_v1.Instance_Template()
+        self.template = compute_v1.InstanceTemplate()
         self.template.name = self.template_name
 
     def create_template(self) -> compute_v1.InstanceTemplate:

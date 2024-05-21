@@ -14,7 +14,7 @@ class InstanceGroupCreator:
             zone: str
         ) -> None:
         self.logger = get_logger(self.__class__.__name__)
-        self.instance_template_creator = Instance_Template_Creator
+        self.instance_template_creator = instance_template_creator
         self.name = name.lower()
         self.node_count = node_count
         self.project_id = project_id
