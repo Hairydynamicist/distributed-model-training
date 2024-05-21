@@ -20,7 +20,7 @@ class MLFlowConfig:
 
 @dataclass
 class InfrastructureConfig:
-    project_id: str = "cybulde"
+    project_id: str = "mlopscourse"
     zone: str = "europe-west4-a"
     instance_group_creator: InstanceGroupCreatorConfig = field(default_factory=InstanceGroupCreatorConfig)
     mlflow: MLFlowConfig = field(default_factory=MLFlowConfig)
