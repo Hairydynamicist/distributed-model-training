@@ -26,7 +26,7 @@ class VMMetaDataConfig:
     python_hash_seed: int = 442
     mlflow_tracking_uri: str = SI("${infrastructure.mlflow.mlflow_internal_tracking_uri}")
     node_count: int = SI("${infrastructure.instance_group_creator.node_count}")
-    disks: list[str] = SI("${..vmconfig.disks}")  
+    disks: list[str] = SI("${..vm_config.disks}")  
 
 @dataclass
 class InstanceTemplateCreatorConfig:
