@@ -89,7 +89,7 @@ class TrainingInfo:
         instance_ids = [str(id) for id in self.instance_ids]
         instance_ids_regex = " OR ".join(instance_ids)
         instance_ids_url = "%20OR%20".join(instance_ids)
-        cluster_url = f"https://console.cloud.google.com/compute/instanceGroups/details/{self.zone}/{self.instance_group_name}?project={self.project_id}"
+        cluster_url = f"https://console.cloud.google.com/compute/instanceGroups/details/{self.zone}/{self.instance_group_name.lower()}?project={self.project_id}"
         log_viewer_url = f"https://console.cloud.google.com/logs/query;query=resource.type%3D%22gce_instance%22%0Aresource.labels.instance_id%3D%2528{instance_ids_url}%2529?project={self.project_id}"
         return instance_ids_regex, log_viewer_url, cluster_url
 
