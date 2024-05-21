@@ -12,13 +12,13 @@ class InstanceGroupCreator:
             node_count: int,
             project_id: str,
             zone: str
-    ) -> None
-    self.logger = get_logger(self.__class__.__name__)
-    self.instance_template_creator = Instance_Template_Creator
-    self.name = name.lower()
-    self.node_count = node_count
-    self.project_id = project_id
-    self.zone = zone 
+        ) -> None:
+        self.logger = get_logger(self.__class__.__name__)
+        self.instance_template_creator = Instance_Template_Creator
+        self.name = name.lower()
+        self.node_count = node_count
+        self.project_id = project_id
+        self.zone = zone 
 
     def launch_instance_group(self) -> list[int]:
         instance_group = self._create_instance_group()

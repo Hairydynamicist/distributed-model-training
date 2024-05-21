@@ -10,7 +10,7 @@ sys.path
 setup_config()
 
 
-@hydra.main(config_path=".", config_name="config", version_base=None)
+@hydra.main(config_path="./scripts/configs", config_name="config", version_base=None)
 def run(config: DictConfig) -> None:
     sys.path
     instance_group_creator = instantiate(config.infrastructure.instance_group_creator)
