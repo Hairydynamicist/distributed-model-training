@@ -2,7 +2,7 @@ from instance_template_creator import InstanceTemplateCreator
 from utils import get_logger, wait_for_extended_operation
 import time
 
-from google.compute import compute_v1
+from google.cloud import compute_v1
 
 class InstanceGroupCreator:
     def __init__(
@@ -12,13 +12,13 @@ class InstanceGroupCreator:
             node_count: int,
             project_id: str,
             zone: str
-    ) -> None
-    self.logger = get_logger(self.__class__.__name__)
-    self.instance_template_creator = Instance_Template_Creator
-    self.name = name.lower()
-    self.node_count = node_count
-    self.project_id = project_id
-    self.zone = zone 
+        ) -> None:
+        self.logger = get_logger(self.__class__.__name__)
+        self.instance_template_creator = instance_template_creator
+        self.name = name.lower()
+        self.node_count = node_count
+        self.project_id = project_id
+        self.zone = zone 
 
     def launch_instance_group(self) -> list[int]:
         instance_group = self._create_instance_group()
@@ -34,11 +34,11 @@ class InstanceGroupCreator:
         instance_group_manager_resource = compute_v1.InstanceGroupManager(
             name = self.name,
             base_instance_name = self.name,
-            instance_template=instance_template.self_lint,
+            instance_template=instance_template.self_link,
             target_size=self.node_count
         )
 
-        instance_group_managers_client = compute_v1.InstanceGroupManagerClient()
+        instance_group_managers_client = compute_v1.InstanceGroupManagersClient()
         operation = instance_group_managers_client.inster(
             project=self.project_id, instance_group_manager_resource=instance_group_manager_resource,
             zone=self.zone
@@ -72,7 +72,7 @@ class InstanceGroupCreator:
         
 
     def list_instances_in_group(self) -> compute_v1.services.instance_group_managers.pagers.ListManagedInstancesPager:
-        instance_group_managers_client = compute_v1.InstanceGroupManagerClient()
+        instance_group_managers_client = compute_v1.InstanceGroupManagersClient()
         pager = instance_group_managers_client.list_managed_instances(
         project=self.project_id, instance_group_manager=self.name, zone=self.zone 
         )
