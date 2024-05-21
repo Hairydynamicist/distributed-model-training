@@ -93,17 +93,17 @@ class InstanceTemplateCreator:
     def _create_boot_disk(self) -> None:
         boot_disk = compute_v1.AttachedDisk()
         boot_disk_initialize_params = compute_v1.AttachedDiskInitializeParams()
-        boot_disk_image = self._get_disk_image(self.boot_disk_config.project_id, 
-                                               self.boot_disk_config.name)
+        boot_disk_image = self._get_disk_image(self.boot_disk_config.project_id, self.boot_disk_config.name)
         boot_disk_initialize_params.source_image = boot_disk_image.self_link
         boot_disk_initialize_params.disk_size_gb = self.boot_disk_config.size_gb
         boot_disk_initialize_params.labels = self.boot_disk_config.labels
-        boot_disk_initialize_params = boot_disk_initialize_params
+        boot_disk.initialize_params = boot_disk_initialize_params
         boot_disk.auto_delete = True
         boot_disk.boot = True
         boot_disk.device_name = self.boot_disk_config.name
 
-        self.template.properties.disks = [boot_disk]
+        if boot_disk:
+            self.template.properties.disks = [boot_disk]
 
     def _get_disk_image(self, project_id: str, image_name: str) -> compute_v1.Image:
         image_client = ImagesClient()
