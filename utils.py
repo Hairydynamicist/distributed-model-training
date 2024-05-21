@@ -10,10 +10,9 @@ from google.api_core.exceptions import GoogleAPICallError
 from google.api_core.extended_operation import ExtendedOperation
 from google.cloud import compute_v1, secretmanager
 
-from cybulde.utils.utils import get_logger
 
 def get_logger(name: str) -> logging.Logger:
-    return logging.getlogger(f[{socket.gethostname()}] {name})
+    return logging.getLogger(f"{socket.gethostname()}, {name}")
 
 GCP_UTILS_LOGGER = get_logger(__name__)
 

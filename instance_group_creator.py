@@ -2,7 +2,7 @@ from instance_template_creator import InstanceTemplateCreator
 from utils import get_logger, wait_for_extended_operation
 import time
 
-from google.compute import compute_v1
+from google.cloud import compute_v1
 
 class InstanceGroupCreator:
     def __init__(
