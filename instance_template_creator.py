@@ -2,6 +2,7 @@ from enum import Enum
 from dataclasses import dataclass
 from google.cloud import compute_v1
 from google.cloud.compute_v1.services.images import ImagesClient
+from google.cloud.compute_v1 import Items
 from pathlib import Path
 from utils import get_logger, wait_for_extended_operation
 
@@ -120,7 +121,7 @@ class InstanceTemplateCreator:
 
 
     def _create_network_interface(self) -> None:
-        network_interface = compute_v1.Network_Interface()
+        network_interface = compute_v1.NetworkInterface()
         network_interface.name = "nic0"
         network_interface.network = self.network
         network_interface.subnetwork = self.subnetwork
@@ -159,11 +160,13 @@ class InstanceTemplateCreator:
         
     def _attach_metadata(self) -> None:
         startup_script = self._read_startup_script(self.startup_script_path)
-        self.template.properties.metadata.items.append(compute_v1.Items(key="startup-script",
-                                                                        value=startup_script))
-        
-        for meta_data_name, meta_data_value in self.vm_config.items():
-            self.template.properties.metadata.items.append(compute_v1.Items(key=meta_data_name, value=str(meta_data_value)))
+        self.template.properties.metadata.items.append(compute_v1.Items(key="startup-script", value=startup_script))
+
+        for meta_data_name, meta_data_value in self.vm_metadata_config.items():  # type: ignore
+            self.template.properties.metadata.items.append(
+                compute_v1.Items(key=meta_data_name, value=str(meta_data_value))
+            )
+
 
     def _read_startup_script(self, startup_script_path) -> str:
         return Path(startup_script_path).read_text()

@@ -1,0 +1,7 @@
+[2024-05-21 14:27:50,396][DESKTOP-HBA9GC2, InstanceGroupCreator][INFO] - starting to create instance group...
+[2024-05-21 14:27:50,397][DESKTOP-HBA9GC2, InstanceTemplateCreator][INFO] - Started creating instance template...
+[2024-05-21 14:27:50,397][DESKTOP-HBA9GC2, InstanceTemplateCreator][INFO] - {'instance_group_name': 'Default-None-20240521142750', 'docker_image': 'asd', 'zone': 'europe-west4-a', 'python_hash_seed': 42, 'mlflow_tracking_uri': 'localhost:6101', 'node_count': 1, 'disks': []}
+[2024-05-21 14:27:53,402][google.auth.compute_engine._metadata][WARNING] - Compute Engine Metadata server unavailable on attempt 1 of 3. Reason: timed out
+[2024-05-21 14:27:56,407][google.auth.compute_engine._metadata][WARNING] - Compute Engine Metadata server unavailable on attempt 2 of 3. Reason: timed out
+[2024-05-21 14:27:59,411][google.auth.compute_engine._metadata][WARNING] - Compute Engine Metadata server unavailable on attempt 3 of 3. Reason: timed out
+[2024-05-21 14:27:59,412][google.auth._default][WARNING] - Authentication failed using Compute Engine authentication due to unavailable metadata server.
