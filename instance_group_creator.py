@@ -34,11 +34,11 @@ class InstanceGroupCreator:
         instance_group_manager_resource = compute_v1.InstanceGroupManager(
             name = self.name,
             base_instance_name = self.name,
-            instance_template=instance_template.self_lint,
+            instance_template=instance_template.self_link,
             target_size=self.node_count
         )
 
-        instance_group_managers_client = compute_v1.InstanceGroupManagerClient()
+        instance_group_managers_client = compute_v1.InstanceGroupManagersClient()
         operation = instance_group_managers_client.inster(
             project=self.project_id, instance_group_manager_resource=instance_group_manager_resource,
             zone=self.zone
@@ -72,7 +72,7 @@ class InstanceGroupCreator:
         
 
     def list_instances_in_group(self) -> compute_v1.services.instance_group_managers.pagers.ListManagedInstancesPager:
-        instance_group_managers_client = compute_v1.InstanceGroupManagerClient()
+        instance_group_managers_client = compute_v1.InstanceGroupManagersClient()
         pager = instance_group_managers_client.list_managed_instances(
         project=self.project_id, instance_group_manager=self.name, zone=self.zone 
         )

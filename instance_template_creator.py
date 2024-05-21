@@ -1,8 +1,10 @@
 from enum import Enum
 from dataclasses import dataclass
-from google.cloud import compute_v1 
+from google.cloud import compute_v1
+from google.cloud.compute_v1.services.images import ImagesClient
 from pathlib import Path
-from utils import get_logger
+from utils import get_logger, wait_for_extended_operation
+
 
 class VMType(Enum):
     STANDARD = "STANDARD"
@@ -50,20 +52,20 @@ class InstanceTemplateCreator:
         vm_metadata_config: VMMetaDataConfig,
         template_name: str,
         project_id: str,
-        labels: dict[str, str]
+        labels: dict[str, str] ={},
     ) -> None:
         self.logger = get_logger(self.__class__.__name__)
 
-        self.scopes : list[str] = scopes,
-        self.network : str = network,
-        self.subnetwork : str = subnetwork,
-        self.startup_script_path  : str = startup_script_path,
-        self.vm_config : VMConfig = vm_config,
-        self.boot_disk_config  : BootDiskConfig = boot_disk_config,
-        self.vm_metadata_config : VMMetaDataConfig = vm_metadata_config,
-        self.template_name : str = template_name,
-        self.project_id : str = project_id,
-        self.labels : dict[str, str] = labels 
+        self.scopes = scopes
+        self.network = network
+        self.subnetwork = subnetwork
+        self.startup_script_path = startup_script_path
+        self.vm_config = vm_config
+        self.boot_disk_config = boot_disk_config
+        self.vm_metadata_config = vm_metadata_config
+        self.template_name = template_name.lower()
+        self.project_id = project_id
+        self.labels = labels
 
         self.template = compute_v1.InstanceTemplate()
         self.template.name = self.template_name
@@ -103,7 +105,7 @@ class InstanceTemplateCreator:
         self.template.properties.disks = [boot_disk]
 
     def _get_disk_image(self, project_id: str, image_name: str) -> compute_v1.Image:
-        image_client = compute_v1.ImageClient()
+        image_client = ImagesClient()
         return image_client.get(project=project_id, image=image_name)
     
     def _attach_disks(self) -> None:
@@ -161,7 +163,7 @@ class InstanceTemplateCreator:
                                                                         value=startup_script))
         
         for meta_data_name, meta_data_value in self.vm_config.items():
-            self.template.properties.metadata.items.append(compute_v1.Items(key=meta_data_name, value=meta_data_value))
+            self.template.properties.metadata.items.append(compute_v1.Items(key=meta_data_name, value=str(meta_data_value)))
 
     def _read_startup_script(self, startup_script_path) -> str:
         return Path(startup_script_path).read_text()
